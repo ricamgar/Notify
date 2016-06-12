@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion parent.ext.androidCompileSdkVersion
+    buildToolsVersion parent.ext.androidBuildToolsVersion
+
+    defaultConfig {
+        applicationId parent.ext.androidApplicationId
+        minSdkVersion parent.ext.androidMinSdkVersion
+        targetSdkVersion parent.ext.androidTargetSdkVersion
+        versionCode parent.ext.androidVersionCode
+        versionName parent.ext.androidVersionName
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField "String", "HOCKEY_APP_ID", '"cd7304aa16714b83ba0f4f1bba844764"'
+        }
+    }
+}
+
+dependencies {
+    compile project(":domain")
+    compile project(':data')
+
+    compile rootProject.ext.dependencies.androidSupportv7
+    compile rootProject.ext.dependencies.androidSupportDesign
+    compile rootProject.ext.dependencies.cardView
+
+    compile rootProject.ext.dependencies.rxJava
+    compile rootProject.ext.dependencies.rxAndroid
+    compile rootProject.ext.dependencies.rxBindings
+
+    compile rootProject.ext.dependencies.dagger2
+    apt rootProject.ext.dependencies.dagger2Compiler
+
+
+
+    compile rootProject.ext.dependencies.hockeyApp
+
+    testCompile rootProject.ext.testDependencies.junit
+}

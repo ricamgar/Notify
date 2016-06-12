@@ -1,0 +1,35 @@
+apply from: 'dependencies.gradle'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+
+allprojects {
+
+    ext {
+        // Android config
+        androidBuildToolsVersion = '23.0.2'
+        androidMinSdkVersion = 15
+        androidTargetSdkVersion = 23
+        androidCompileSdkVersion = 23
+        androidApplicationId = 'com.ricamgar.notify'
+        androidVersionCode = 1
+        androidVersionName = '1.0'
+    }
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
