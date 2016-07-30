@@ -3,20 +3,21 @@ package com.ricamgar.notify.addreminder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.jakewharton.rxbinding.widget.RxCompoundButton;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.ricamgar.notify.R;
-import com.ricamgar.notify.base.view.BaseActivity;
+import com.ricamgar.notify.base.mvp.BaseActivity;
+import com.ricamgar.notify.domain.reminder.model.Reminder;
 import com.ricamgar.notify.main.NotifyApp;
 
 import javax.inject.Inject;
 
-public class AddReminderActivity extends BaseActivity implements AddReminderPresenter.View {
+public class AddReminderActivity
+        extends BaseActivity<Reminder, AddReminderPresenter.View, AddReminderPresenter>
+        implements AddReminderPresenter.View {
 
     @Inject
     AddReminderPresenter presenter;
@@ -27,8 +28,8 @@ public class AddReminderActivity extends BaseActivity implements AddReminderPres
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         NotifyApp.getApplicationComponent().inject(this);
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_reminder);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -37,23 +38,26 @@ public class AddReminderActivity extends BaseActivity implements AddReminderPres
         RxTextView.textChanges(descriptionEt).subscribe(presenter::setDescription);
 
         findViewById(R.id.add_btn).setOnClickListener(view -> presenter.insertReminder());
-
-        presenter.attachToView(this);
     }
 
     @Override
-    public void showProgress() {
-
+    protected Reminder createViewModel() {
+        return Reminder.NULL;
     }
 
     @Override
-    public void hideProgress() {
-
+    protected AddReminderPresenter initializePresenter() {
+        return presenter;
     }
 
     @Override
-    public void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void showError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showReminderCreatedSuccess() {
+        Toast.makeText(this, "Reminder created", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -61,9 +61,6 @@ public class NotificationsController {
                     .setStyle(inboxStyle)
                     .setContentText(size + " Reminders");
         }
-        //              .setContentIntent(contentIntent)
-        //              .setDeleteIntent(deleteIntent)
-
 
         Notification notification = builder.build();
         notificationManager.notify(0, notification);

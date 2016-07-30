@@ -1,9 +1,10 @@
 package com.ricamgar.notify.domain.reminder.usecase;
 
 import com.ricamgar.notify.domain.base.usecase.UseCase;
+import com.ricamgar.notify.domain.reminder.model.Reminder;
 import com.ricamgar.notify.domain.reminder.repository.RemindersRepository;
 
-import java.util.concurrent.ForkJoinPool;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,7 +12,7 @@ import javax.inject.Named;
 import rx.Observable;
 import rx.Scheduler;
 
-public class GetReminders extends UseCase {
+public class GetReminders extends UseCase<List<Reminder>> {
 
     private final RemindersRepository remindersRepository;
     private boolean history;
@@ -25,7 +26,7 @@ public class GetReminders extends UseCase {
     }
 
     @Override
-    protected Observable buildUseCaseObservable() {
+    protected Observable<List<Reminder>> buildUseCaseObservable() {
         if (history) {
             return remindersRepository.getHistoryReminders();
         } else {

@@ -1,7 +1,9 @@
 package com.ricamgar.notify.reminderslist;
 
-import com.ricamgar.notify.base.view.BasePresenter;
-import com.ricamgar.notify.base.view.BaseView;
+import android.support.annotation.Nullable;
+
+import com.ricamgar.notify.base.mvp.AbstractBasePresenter;
+import com.ricamgar.notify.base.mvp.BaseView;
 import com.ricamgar.notify.domain.reminder.model.Reminder;
 import com.ricamgar.notify.domain.reminder.usecase.DeleteReminder;
 import com.ricamgar.notify.domain.reminder.usecase.GetReminders;
@@ -12,15 +14,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-
-public class RemindersListPresenter extends BasePresenter {
+public class RemindersListPresenter
+        extends AbstractBasePresenter<RemindersListPresenter.View, List<Reminder>> {
 
     private final GetReminders getRemindersUseCase;
     private final MarkReminderAsDone markReminderAsDoneUseCase;
     private final MarkReminderAsTodo markReminderAsTodo;
     private final DeleteReminder deleteReminder;
-    private View view;
+    private int position;
 
     @Inject
     public RemindersListPresenter(GetReminders getRemindersUseCase,
@@ -34,19 +35,21 @@ public class RemindersListPresenter extends BasePresenter {
     }
 
     @Override
-    protected void attachToView(BaseView view) {
-        this.view = (View) view;
-
-    }
-
-    public void initialize(int position) {
-        getRemindersUseCase.history(position == 1).execute(new GetRemindersSubscriber());
-    }
-
-    @Override
-    protected void detachFromView() {
-        super.detachFromView();
-        getRemindersUseCase.unsubscribe();
+    public void attachToView(View view, @Nullable List<Reminder> viewModel) {
+        super.attachToView(view, viewModel);
+        if (viewModel.isEmpty()) {
+            addSubscription(getRemindersUseCase.history(position == 1)
+                    .execute()
+                    .subscribe(
+                            reminders -> {
+                                viewModel.addAll(reminders);
+                                view.setReminders(reminders);
+                            },
+                            view::showError
+                    ));
+        } else {
+            view.setReminders(viewModel);
+        }
     }
 
     public void reminderMarked(Reminder reminder, boolean done) {
@@ -64,27 +67,14 @@ public class RemindersListPresenter extends BasePresenter {
         deleteReminder.execute();
     }
 
-    private final class GetRemindersSubscriber extends Subscriber<List<Reminder>> {
-
-        @Override
-        public void onCompleted() {
-            view.hideProgress();
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            view.showToast(e.getMessage());
-        }
-
-        @Override
-        public void onNext(List<Reminder> reminders) {
-            view.setReminders(reminders);
-            view.hideProgress();
-        }
+    public RemindersListPresenter setPosition(int position) {
+        this.position = position;
+        return this;
     }
 
     public interface View extends BaseView {
         void setReminders(List<Reminder> reminders);
-    }
 
+        void showError(Throwable throwable);
+    }
 }
