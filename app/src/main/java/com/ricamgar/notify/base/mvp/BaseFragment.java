@@ -3,13 +3,11 @@ package com.ricamgar.notify.base.mvp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
-public abstract class BaseFragment<ViewModel, View extends BaseView, Presenter extends AbstractBasePresenter<View,
-        ViewModel>>  extends Fragment implements BaseView {
+public abstract class BaseFragment<ViewModel, Presenter extends AbstractBasePresenter<ViewModel>>
+        extends Fragment implements AbstractBasePresenter.BaseView {
 
-    ViewDelegate<ViewModel, View, Presenter> viewDelegate = new ViewDelegate<ViewModel, View, Presenter>() {
+    ViewDelegate<ViewModel, Presenter> viewDelegate = new ViewDelegate<ViewModel, Presenter>() {
         @Override
         protected Presenter initializePresenter() {
             return BaseFragment.this.initializePresenter();
@@ -30,7 +28,7 @@ public abstract class BaseFragment<ViewModel, View extends BaseView, Presenter e
     @Override
     public void onStart() {
         super.onStart();
-        viewDelegate.onStart((View) this);
+        viewDelegate.onStart(this);
     }
 
     @Override

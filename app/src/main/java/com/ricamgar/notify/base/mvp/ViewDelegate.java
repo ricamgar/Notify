@@ -7,15 +7,15 @@ import android.support.annotation.Nullable;
 import java.io.Serializable;
 
 @SuppressWarnings("unchecked")
-public abstract class ViewDelegate<ViewModel, View extends BaseView, Presenter
-      extends AbstractBasePresenter<View, ViewModel>> {
+public abstract class ViewDelegate<ViewModel, Presenter
+        extends AbstractBasePresenter<ViewModel>> {
 
     Presenter presenter;
     ViewModel viewModel;
 
     private String presentationModelKey;
 
-    public void onCreate(BaseView baseView, @Nullable Bundle savedInstanceState) {
+    public void onCreate(AbstractBasePresenter.BaseView baseView, @Nullable Bundle savedInstanceState) {
         presentationModelKey = baseView.getClass().getCanonicalName() + "$PresentationModel";
         presenter = initializePresenter();
         viewModel = restoreViewModel(savedInstanceState);
@@ -24,7 +24,7 @@ public abstract class ViewDelegate<ViewModel, View extends BaseView, Presenter
         }
     }
 
-    public void onStart(View baseView) {
+    public void onStart(AbstractBasePresenter.BaseView baseView) {
         presenter.attachToView(baseView, viewModel);
     }
 

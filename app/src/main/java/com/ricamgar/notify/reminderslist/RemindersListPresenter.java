@@ -3,7 +3,6 @@ package com.ricamgar.notify.reminderslist;
 import android.support.annotation.Nullable;
 
 import com.ricamgar.notify.base.mvp.AbstractBasePresenter;
-import com.ricamgar.notify.base.mvp.BaseView;
 import com.ricamgar.notify.domain.reminder.model.Reminder;
 import com.ricamgar.notify.domain.reminder.usecase.DeleteReminder;
 import com.ricamgar.notify.domain.reminder.usecase.GetReminders;
@@ -15,7 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class RemindersListPresenter
-        extends AbstractBasePresenter<RemindersListPresenter.View, List<Reminder>> {
+        extends AbstractBasePresenter<List<Reminder>> {
 
     private final GetReminders getRemindersUseCase;
     private final MarkReminderAsDone markReminderAsDoneUseCase;
@@ -35,7 +34,7 @@ public class RemindersListPresenter
     }
 
     @Override
-    public void attachToView(View view, @Nullable List<Reminder> viewModel) {
+    public void attachToView(BaseView view, @Nullable List<Reminder> viewModel) {
         super.attachToView(view, viewModel);
         if (viewModel.isEmpty()) {
             addSubscription(getRemindersUseCase.history(position == 1)
@@ -44,12 +43,12 @@ public class RemindersListPresenter
                             reminders -> {
                                 viewModel.clear();
                                 viewModel.addAll(reminders);
-                                view.setReminders(reminders);
+                                ((View) view).setReminders(reminders);
                             },
-                            view::showError
+                            ((View) view)::showError
                     ));
         } else {
-            view.setReminders(viewModel);
+            ((View) view).setReminders(viewModel);
         }
     }
 

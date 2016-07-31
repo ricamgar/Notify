@@ -1,9 +1,5 @@
 package com.ricamgar.notify.base.mvp;
 
-/**
- * @author ricardo.campos.
- */
-
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 
@@ -11,14 +7,14 @@ import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 /** Abstraction for the Presenters in a MVP pattern. */
-public abstract class AbstractBasePresenter<View extends BaseView, Model> {
+public abstract class AbstractBasePresenter<ViewModel> {
 
-    protected View view;
-    protected Model viewModel;
+    protected BaseView view;
+    protected ViewModel viewModel;
 
     private final CompositeSubscription compositeSubscription = new CompositeSubscription();
 
-    public void attachToView(View view, @Nullable Model viewModel) {
+    public void attachToView(BaseView view, @Nullable ViewModel viewModel) {
         this.view = view;
         this.viewModel = viewModel;
     }
@@ -41,5 +37,12 @@ public abstract class AbstractBasePresenter<View extends BaseView, Model> {
      */
     protected void addSubscription(Subscription subscription) {
         compositeSubscription.add(subscription);
+    }
+
+    /**
+     * Base View interface used on the MVP architecture.
+     */
+    public interface BaseView {
+
     }
 }

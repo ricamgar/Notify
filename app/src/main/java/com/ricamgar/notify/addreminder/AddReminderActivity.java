@@ -16,7 +16,7 @@ import com.ricamgar.notify.main.NotifyApp;
 import javax.inject.Inject;
 
 public class AddReminderActivity
-        extends BaseActivity<Reminder, AddReminderPresenter.View, AddReminderPresenter>
+        extends BaseActivity<Reminder, AddReminderPresenter>
         implements AddReminderPresenter.View {
 
     @Inject

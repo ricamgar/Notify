@@ -1,13 +1,12 @@
 package com.ricamgar.notify.addreminder;
 
 import com.ricamgar.notify.base.mvp.AbstractBasePresenter;
-import com.ricamgar.notify.base.mvp.BaseView;
 import com.ricamgar.notify.domain.reminder.model.Reminder;
 import com.ricamgar.notify.domain.reminder.usecase.AddOrUpdateReminder;
 
 import javax.inject.Inject;
 
-public class AddReminderPresenter extends AbstractBasePresenter<AddReminderPresenter.View, Reminder> {
+public class AddReminderPresenter extends AbstractBasePresenter<Reminder> {
 
     private final AddOrUpdateReminder addReminderUseCase;
     private final Reminder.Builder reminderBuilder = new Reminder.Builder();
@@ -20,7 +19,7 @@ public class AddReminderPresenter extends AbstractBasePresenter<AddReminderPrese
     public void insertReminder() {
         Reminder reminder = reminderBuilder.build();
         if (reminder.description.isEmpty()) {
-            view.showError("Invalid reminder");
+            ((View) view).showError("Invalid reminder");
             return;
         }
 
@@ -28,10 +27,10 @@ public class AddReminderPresenter extends AbstractBasePresenter<AddReminderPrese
                 .execute()
                 .subscribe(
                         insertedReminder -> {
-                            view.showReminderCreatedSuccess();
-                            view.closeDialog();
+                            ((View) view).showReminderCreatedSuccess();
+                            ((View) view).closeDialog();
                         },
-                        throwable -> view.showError(throwable.getMessage())
+                        throwable -> ((View) view).showError(throwable.getMessage())
                 ));
     }
 

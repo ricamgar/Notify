@@ -20,7 +20,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class RemindersListFragment
-        extends BaseFragment<List<Reminder>, RemindersListPresenter.View, RemindersListPresenter>
+        extends BaseFragment<List<Reminder>, RemindersListPresenter>
         implements RemindersListPresenter.View, RemindersListAdapter.ReminderListener {
 
     private static final String FRAGMENT_POSITION = "FRAGMENT_POSITION";
