@@ -1,6 +1,8 @@
 package com.ricamgar.notify.domain.reminder.model;
 
-public final class Reminder {
+import java.io.Serializable;
+
+public final class Reminder implements Serializable {
 
     public static final Reminder NULL = new Reminder(-1, "", false, true);
 

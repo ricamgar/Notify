@@ -1,12 +1,10 @@
 package com.ricamgar.notify.reminderslist;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.ricamgar.notify.R;
@@ -16,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
 import rx.functions.Action1;
 
 public class RemindersListAdapter extends RecyclerView.Adapter<RemindersListAdapter.ReminderViewHolder> implements
@@ -24,11 +21,9 @@ public class RemindersListAdapter extends RecyclerView.Adapter<RemindersListAdap
 
     private final ReminderListener listener;
     private final int mode;
-    private final Context context;
     private List<Reminder> items = Collections.emptyList();
 
-    public RemindersListAdapter(Context context, ReminderListener listener, int mode) {
-        this.context = context;
+    public RemindersListAdapter(ReminderListener listener, int mode) {
         this.listener = listener;
         this.mode = mode;
     }
@@ -52,9 +47,7 @@ public class RemindersListAdapter extends RecyclerView.Adapter<RemindersListAdap
                 .delay(500, TimeUnit.MILLISECONDS)
                 .subscribe(o -> listener.onReminderChecked(reminder, !reminder.done));
 
-        reminderViewHolder.itemView.setOnClickListener(view -> {
-            listener.onReminderClicked(reminder);
-        });
+        reminderViewHolder.itemView.setOnClickListener(view -> listener.onReminderClicked(reminder));
         if (mode == 0) {
             reminderViewHolder.delete.setVisibility(View.GONE);
         } else {

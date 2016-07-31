@@ -42,6 +42,7 @@ public class RemindersListPresenter
                     .execute()
                     .subscribe(
                             reminders -> {
+                                viewModel.clear();
                                 viewModel.addAll(reminders);
                                 view.setReminders(reminders);
                             },
@@ -55,16 +56,22 @@ public class RemindersListPresenter
     public void reminderMarked(Reminder reminder, boolean done) {
         if (done) {
             markReminderAsDoneUseCase.setReminder(reminder);
-            markReminderAsDoneUseCase.execute();
+            markReminderAsDoneUseCase
+                    .execute()
+                    .subscribe();
         } else {
             markReminderAsTodo.setReminder(reminder);
-            markReminderAsTodo.execute();
+            markReminderAsTodo
+                    .execute()
+                    .subscribe();
         }
     }
 
     public void reminderDeleted(Reminder reminder) {
         deleteReminder.setReminder(reminder);
-        deleteReminder.execute();
+        deleteReminder
+                .execute()
+                .subscribe();
     }
 
     public RemindersListPresenter setPosition(int position) {
