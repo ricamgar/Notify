@@ -1,11 +1,10 @@
 package com.ricamgar.notify.main;
 
 import android.app.Application;
-import android.util.Log;
+
+import net.hockeyapp.android.CrashManager;
 
 public class NotifyApp extends Application {
-
-    private static final String TAG = NotifyApp.class.getSimpleName();
 
     private static ApplicationComponent applicationComponent;
 
@@ -16,6 +15,8 @@ public class NotifyApp extends Application {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+
+        CrashManager.register(this);
     }
 
     public static ApplicationComponent getApplicationComponent() {

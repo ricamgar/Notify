@@ -22,7 +22,6 @@ public abstract class BaseActivity<ViewModel, Presenter extends AbstractBasePres
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewDelegate.onCreate(this, savedInstanceState);
-//        UpdateManager.register(this, BuildConfig.HOCKEY_APP_ID);
     }
 
     @Override
@@ -32,21 +31,9 @@ public abstract class BaseActivity<ViewModel, Presenter extends AbstractBasePres
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-//        CrashManager.register(this, BuildConfig.HOCKEY_APP_ID);
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         viewDelegate.onSavedInstanceState(outState);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-//        UpdateManager.unregister();
     }
 
     @Override

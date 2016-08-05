@@ -12,6 +12,7 @@ android {
         targetSdkVersion parent.ext.androidTargetSdkVersion
         versionCode parent.ext.androidVersionCode
         versionName parent.ext.androidVersionName
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "4e130fec617042c7b00fe7fdae4e7025"]
     }
 
     compileOptions {
@@ -25,7 +26,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "String", "HOCKEY_APP_ID", '"cd7304aa16714b83ba0f4f1bba844764"'
+
         }
     }
 }
@@ -44,8 +45,6 @@ dependencies {
 
     compile rootProject.ext.dependencies.dagger2
     apt rootProject.ext.dependencies.dagger2Compiler
-
-
 
     compile rootProject.ext.dependencies.hockeyApp
 

@@ -1,5 +1,6 @@
 package com.ricamgar.notify.main;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(v -> openAddReminderActivity());
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new MainAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new MainAdapter(this, getSupportFragmentManager()));
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
@@ -46,8 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static class MainAdapter extends FragmentPagerAdapter {
 
-        public MainAdapter(FragmentManager fm) {
+        private final Context context;
+
+        public MainAdapter(Context context, FragmentManager fm) {
             super(fm);
+            this.context = context;
         }
 
         @Override
@@ -62,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return position == 0 ? "REMINDERS" : "HISTORY";
+            return position == 0 ? context.getString(R.string.tab_reminders)
+                    : context.getString(R.string.tab_history);
         }
     }
 
