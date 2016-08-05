@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -35,6 +36,13 @@ public class AddReminderActivity
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         EditText descriptionEt = (EditText) findViewById(R.id.add_description);
+        descriptionEt.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                presenter.insertReminder();
+                return true;
+            }
+            return false;
+        });
         RxTextView.textChanges(descriptionEt).subscribe(presenter::setDescription);
 
         findViewById(R.id.add_btn).setOnClickListener(view -> presenter.insertReminder());
