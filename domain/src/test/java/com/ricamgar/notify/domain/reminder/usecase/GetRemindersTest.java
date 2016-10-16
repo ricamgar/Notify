@@ -31,11 +31,24 @@ public class GetRemindersTest extends UseCaseTest{
     }
 
     @Test
-    public void testGetAllReminders() throws Exception {
-        when(mockRepository.getAll()).thenReturn(Observable.just(RemindersDoubles.REMINDERS_LIST));
+    public void getHistoryRemindersReturnsWithoutError() throws Exception {
+        getRemindersUseCase.history(true);
+        when(mockRepository.getHistoryReminders()).thenReturn(Observable.just(RemindersDoubles.REMINDERS_LIST));
 
         TestSubscriber<List<Reminder>> testSubscriber = new TestSubscriber<>();
-        getRemindersUseCase.execute(testSubscriber);
+        getRemindersUseCase.execute().subscribe(testSubscriber);
+
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertValue(RemindersDoubles.REMINDERS_LIST);
+    }
+
+    @Test
+    public void getTodoRemindersReturnsWithoutError() throws Exception {
+        getRemindersUseCase.history(false);
+        when(mockRepository.getTodoReminders()).thenReturn(Observable.just(RemindersDoubles.REMINDERS_LIST));
+
+        TestSubscriber<List<Reminder>> testSubscriber = new TestSubscriber<>();
+        getRemindersUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertNoErrors();
         testSubscriber.assertValue(RemindersDoubles.REMINDERS_LIST);

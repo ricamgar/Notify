@@ -38,7 +38,7 @@ public class MarkReminderAsTodoTest extends UseCaseTest {
 
         TestSubscriber<Reminder> testSubscriber = new TestSubscriber<>();
         markReminderAsTodoUseCase.setReminder(original);
-        markReminderAsTodoUseCase.execute(testSubscriber);
+        markReminderAsTodoUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertNoErrors();
         testSubscriber.assertValue(markAsTodo);
@@ -47,7 +47,7 @@ public class MarkReminderAsTodoTest extends UseCaseTest {
     @Test
     public void testMarkReminderAsTodoErrorNoReminderSet() throws Exception {
         TestSubscriber<Reminder> testSubscriber = new TestSubscriber<>();
-        markReminderAsTodoUseCase.execute(testSubscriber);
+        markReminderAsTodoUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertError(IllegalArgumentException.class);
     }

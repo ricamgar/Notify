@@ -38,7 +38,7 @@ public class MarkReminderAsDoneTest extends UseCaseTest {
 
         TestSubscriber<Reminder> testSubscriber = new TestSubscriber<>();
         markReminderAsDoneUseCase.setReminder(original);
-        markReminderAsDoneUseCase.execute(testSubscriber);
+        markReminderAsDoneUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertNoErrors();
         testSubscriber.assertValue(markAsDone);
@@ -51,7 +51,7 @@ public class MarkReminderAsDoneTest extends UseCaseTest {
         when(remindersRepository.addOrUpdate(any(Reminder.class))).thenReturn(Observable.just(markAsDone));
 
         TestSubscriber<Reminder> testSubscriber = new TestSubscriber<>();
-        markReminderAsDoneUseCase.execute(testSubscriber);
+        markReminderAsDoneUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertError(IllegalArgumentException.class);
     }

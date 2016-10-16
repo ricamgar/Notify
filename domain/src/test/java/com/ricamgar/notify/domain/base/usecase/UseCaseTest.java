@@ -7,8 +7,6 @@ import org.mockito.MockitoAnnotations;
 import rx.Scheduler;
 import rx.schedulers.Schedulers;
 
-import static org.mockito.Mockito.when;
-
 public abstract class UseCaseTest {
 
     @Mock
@@ -20,7 +18,7 @@ public abstract class UseCaseTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        when(executionThread).thenReturn(Schedulers.immediate());
-        when(postExecutionThread).thenReturn(Schedulers.immediate());
+        executionThread = Schedulers.immediate();
+        postExecutionThread = Schedulers.immediate();
     }
 }

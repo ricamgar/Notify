@@ -34,7 +34,7 @@ public class AddOrUpdateReminderTest extends UseCaseTest {
     public void testAddReminderSuccess() throws Exception {
         TestSubscriber<Reminder> testSubscriber = new TestSubscriber<>();
         addOrUpdateReminderUseCase.setReminder(RemindersDoubles.REMINDER);
-        addOrUpdateReminderUseCase.execute(testSubscriber);
+        addOrUpdateReminderUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertNoErrors();
         testSubscriber.assertValue(RemindersDoubles.REMINDER);
@@ -43,7 +43,7 @@ public class AddOrUpdateReminderTest extends UseCaseTest {
     @Test
     public void testAddReminderErrorReminderNotSet() throws Exception {
         TestSubscriber<Reminder> testSubscriber = new TestSubscriber<>();
-        addOrUpdateReminderUseCase.execute(testSubscriber);
+        addOrUpdateReminderUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertError(IllegalArgumentException.class);
     }
