@@ -10,7 +10,7 @@ import javax.inject.Named;
 import rx.Observable;
 import rx.Scheduler;
 
-public class DeleteReminder extends UseCase {
+public class DeleteReminder extends UseCase<Integer> {
 
     private final RemindersRepository remindersRepository;
     private Reminder reminder;
@@ -28,7 +28,7 @@ public class DeleteReminder extends UseCase {
     }
 
     @Override
-    protected Observable buildUseCaseObservable() {
+    protected Observable<Integer> buildUseCaseObservable() {
         if (reminder == null) {
             return Observable.error(new IllegalArgumentException());
         }
