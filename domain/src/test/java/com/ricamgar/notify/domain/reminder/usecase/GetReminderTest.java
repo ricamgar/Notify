@@ -30,14 +30,14 @@ public class GetReminderTest extends UseCaseTest {
         getReminderUseCase = new GetReminder(remindersRepository, executionThread, postExecutionThread);
 
         when(remindersRepository.getById(0)).thenReturn(Observable.just(RemindersDoubles.REMINDER));
-        when(remindersRepository.getById(1)).thenReturn(Observable.empty());
+        when(remindersRepository.getById(1)).thenReturn(Observable.<Reminder>empty());
     }
 
     @Test
     public void testGetReminderByIdSuccess() throws Exception {
         TestSubscriber<Reminder> testSubscriber = new TestSubscriber<>();
         getReminderUseCase.setId(0);
-        getReminderUseCase.execute(testSubscriber);
+        getReminderUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertNoErrors();
         testSubscriber.assertValue(RemindersDoubles.REMINDER);
@@ -47,7 +47,7 @@ public class GetReminderTest extends UseCaseTest {
     public void testGetReminderByIdNotFound() throws Exception {
         TestSubscriber<Reminder> testSubscriber = new TestSubscriber<>();
         getReminderUseCase.setId(1);
-        getReminderUseCase.execute(testSubscriber);
+        getReminderUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertNoErrors();
         testSubscriber.assertNoValues();
@@ -56,7 +56,7 @@ public class GetReminderTest extends UseCaseTest {
     @Test
     public void testGetReminderByIdErrorIdNotSet() throws Exception {
         TestSubscriber<Reminder> testSubscriber = new TestSubscriber<>();
-        getReminderUseCase.execute(testSubscriber);
+        getReminderUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertError(NoSuchElementException.class);
     }

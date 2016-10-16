@@ -33,7 +33,7 @@ public class DeleteReminderTest extends UseCaseTest {
     public void testDeleteReminderSuccess() throws Exception {
         TestSubscriber<Integer> testSubscriber = new TestSubscriber<>();
         deleteReminderUseCase.setReminder(RemindersDoubles.REMINDER);
-        deleteReminderUseCase.execute(testSubscriber);
+        deleteReminderUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertNoErrors();
         testSubscriber.assertValue(1);
@@ -42,7 +42,7 @@ public class DeleteReminderTest extends UseCaseTest {
     @Test
     public void testDeleteReminderErrorReminderNotSet() throws Exception {
         TestSubscriber<Integer> testSubscriber = new TestSubscriber<>();
-        deleteReminderUseCase.execute(testSubscriber);
+        deleteReminderUseCase.execute().subscribe(testSubscriber);
 
         testSubscriber.assertError(IllegalArgumentException.class);
     }
