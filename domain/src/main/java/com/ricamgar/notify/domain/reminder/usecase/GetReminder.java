@@ -1,6 +1,7 @@
 package com.ricamgar.notify.domain.reminder.usecase;
 
 import com.ricamgar.notify.domain.base.usecase.UseCase;
+import com.ricamgar.notify.domain.reminder.model.Reminder;
 import com.ricamgar.notify.domain.reminder.repository.RemindersRepository;
 
 import java.util.NoSuchElementException;
@@ -8,7 +9,7 @@ import java.util.NoSuchElementException;
 import rx.Observable;
 import rx.Scheduler;
 
-public class GetReminder extends UseCase {
+public class GetReminder extends UseCase<Reminder> {
 
     private final RemindersRepository remindersRepository;
     private long reminderId = -1;
@@ -23,7 +24,7 @@ public class GetReminder extends UseCase {
     }
 
     @Override
-    protected Observable buildUseCaseObservable() {
+    protected Observable<Reminder> buildUseCaseObservable() {
         if (reminderId < 0) {
             return Observable.error(new NoSuchElementException());
         }

@@ -36,7 +36,6 @@ public abstract class UseCase<T> {
     /**
      * Executes the current use case.
      */
-    @SuppressWarnings("unchecked")
     public Observable<T> execute() {
         return buildUseCaseObservable()
                 .subscribeOn(executionThread)
