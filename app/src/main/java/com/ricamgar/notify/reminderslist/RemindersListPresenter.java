@@ -36,14 +36,14 @@ public class RemindersListPresenter
     @Override
     public void attachToView(BaseView view, @Nullable List<Reminder> viewModel) {
         super.attachToView(view, viewModel);
-        if (viewModel.isEmpty()) {
+        if (viewModel != null && viewModel.isEmpty()) {
             addSubscription(getRemindersUseCase.history(position == 1)
                     .execute()
                     .subscribe(
                             reminders -> {
                                 viewModel.clear();
                                 viewModel.addAll(reminders);
-                                ((View) view).setReminders(reminders);
+                                ((View) view).setReminders((List<Reminder>) reminders);
                             },
                             ((View) view)::showError
                     ));

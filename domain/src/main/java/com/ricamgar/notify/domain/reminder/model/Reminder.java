@@ -18,21 +18,15 @@ public final class Reminder implements Serializable {
         this.done = done;
     }
 
-    private Reminder(Builder builder) {
-        id = builder.id;
-        description = builder.description;
-        sticky = builder.sticky;
-        done = builder.done;
+    Reminder(Builder builder) {
+        this(builder.id, builder.description, builder.sticky, builder.done);
     }
 
     public static final class Builder {
-        private Integer id;
-        private String description;
-        private boolean sticky;
-        private boolean done;
-
-        public Builder() {
-        }
+        Integer id;
+        String description;
+        boolean sticky;
+        boolean done;
 
         public Builder id(Integer val) {
             id = val;
