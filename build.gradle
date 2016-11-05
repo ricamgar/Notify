@@ -21,7 +21,7 @@ allprojects {
         androidTargetSdkVersion = 23
         androidCompileSdkVersion = 23
         androidApplicationId = 'com.ricamgar.notify'
-        androidVersionCode = 1
+        androidVersionCode = 2
         androidVersionName = '1.0'
     }
 
