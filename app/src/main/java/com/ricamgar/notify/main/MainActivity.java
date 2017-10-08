@@ -21,10 +21,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> openAddReminderActivity());
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new MainAdapter(this, getSupportFragmentManager()));
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
@@ -37,19 +37,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
 
     private void openAddReminderActivity() {
-        startActivity(AddReminderActivity.getIntent(this));
+        startActivity(AddReminderActivity.Companion.getIntent(this));
     }
 
     private static class MainAdapter extends FragmentPagerAdapter {
 
         private final Context context;
 
-        public MainAdapter(Context context, FragmentManager fm) {
+        MainAdapter(Context context, FragmentManager fm) {
             super(fm);
             this.context = context;
         }

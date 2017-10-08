@@ -4,4 +4,5 @@
   <string name="tab_reminders">REMINDERS</string>
   <string name="tab_history">HISTORY</string>
   <string name="add_reminder">Add Reminder</string>
+  <string name="save">Save</string>
 </resources>
