@@ -33,7 +33,6 @@ public class AddReminderActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_reminder);
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         EditText descriptionEt = (EditText) findViewById(R.id.add_description);
         descriptionEt.setOnEditorActionListener((v, actionId, event) -> {
