@@ -1,36 +1,39 @@
 apply from: 'dependencies.gradle'
 
 buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.4"
-    }
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:2.2.2'
+    classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.4-3"
+  }
 }
 
 allprojects {
 
-    ext {
-        // Android config
-        androidBuildToolsVersion = '23.0.2'
-        androidMinSdkVersion = 16
-        androidTargetSdkVersion = 23
-        androidCompileSdkVersion = 23
-        androidApplicationId = 'com.ricamgar.notify'
-        androidVersionCode = 2
-        androidVersionName = '1.0'
-    }
+  ext {
+    // Android config
+    androidBuildToolsVersion = '23.0.2'
+    androidMinSdkVersion = 16
+    androidTargetSdkVersion = 26
+    androidCompileSdkVersion = 26
+    androidApplicationId = 'com.ricamgar.notify'
+    androidVersionCode = 2
+    androidVersionName = '1.0'
+  }
 
-    repositories {
-        jcenter()
-        mavenCentral()
+  repositories {
+    jcenter()
+    mavenCentral()
+    maven {
+      url 'https://maven.google.com'
     }
+  }
 }
 
 task clean(type: Delete) {
-    delete rootProject.buildDir
+  delete rootProject.buildDir
 }
