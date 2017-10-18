@@ -28,7 +28,7 @@ class MarkReminderAsDoneTest : UseCaseTest() {
 
     @Test fun testMarkReminderAsDoneSuccess() {
         val original = RemindersDoubles.REMINDER
-        val markAsDone = Reminder(original.id, original.description, original.sticky, true)
+        val markAsDone = Reminder(original.id, original.description, original.sticky, true, group)
         `when`(remindersRepository.addOrUpdate(any(Reminder::class.java))).thenReturn(Observable.just(markAsDone))
 
         val testSubscriber = TestSubscriber<Reminder>()
@@ -41,7 +41,7 @@ class MarkReminderAsDoneTest : UseCaseTest() {
 
     @Test fun testMarkReminderAsDoneErrorNoReminderSet() {
         val original = RemindersDoubles.REMINDER
-        val markAsDone = Reminder(original.id, original.description, original.sticky, true)
+        val markAsDone = Reminder(original.id, original.description, original.sticky, true, group)
         `when`(remindersRepository.addOrUpdate(any(Reminder::class.java))).thenReturn(Observable.just(markAsDone))
 
         val testSubscriber = TestSubscriber<Reminder>()

@@ -5,7 +5,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.2.2'
+    classpath 'com.android.tools.build:gradle:2.3.1'
     classpath 'me.tatarka:gradle-retrolambda:3.2.5'
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.51"
@@ -16,7 +16,7 @@ allprojects {
 
   ext {
     // Android config
-    androidBuildToolsVersion = '23.0.2'
+    androidBuildToolsVersion = '25.0.2'
     androidMinSdkVersion = 16
     androidTargetSdkVersion = 26
     androidCompileSdkVersion = 26

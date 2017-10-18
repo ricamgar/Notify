@@ -1,5 +1,7 @@
 apply plugin: 'java'
+apply plugin: 'application'
 apply plugin: 'kotlin'
+
 
 //noinspection GroovyUnusedAssignment
 sourceCompatibility = 1.7

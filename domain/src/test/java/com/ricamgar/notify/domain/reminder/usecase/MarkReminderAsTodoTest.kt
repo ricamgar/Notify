@@ -25,7 +25,7 @@ class MarkReminderAsTodoTest : UseCaseTest() {
 
     @Test fun testMarkReminderAsTodoSuccess() {
         val original = RemindersDoubles.REMINDER
-        val markAsTodo = Reminder(original.id, original.description, original.sticky, false)
+        val markAsTodo = Reminder(original.id, original.description, original.sticky, false, group)
         `when`(remindersRepository.addOrUpdate(any(Reminder::class.java))).thenReturn(Observable.just(markAsTodo))
 
         val testSubscriber = TestSubscriber<Reminder>()

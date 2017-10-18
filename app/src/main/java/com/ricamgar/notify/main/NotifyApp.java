@@ -2,24 +2,29 @@ package com.ricamgar.notify.main;
 
 import android.app.Application;
 
+import javax.inject.Inject;
 import net.hockeyapp.android.CrashManager;
 
 public class NotifyApp extends Application {
 
-    private static ApplicationComponent applicationComponent;
+  private static ApplicationComponent applicationComponent;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+  @Inject NotificationsController notificationsController;
 
-        applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
+  @Override
+  public void onCreate() {
+    super.onCreate();
 
-        CrashManager.register(this);
-    }
+    applicationComponent = DaggerApplicationComponent.builder()
+        .applicationModule(new ApplicationModule(this))
+        .build();
 
-    public static ApplicationComponent getApplicationComponent() {
-        return applicationComponent;
-    }
+    applicationComponent.inject(this);
+
+    CrashManager.register(this);
+  }
+
+  public static ApplicationComponent getApplicationComponent() {
+    return applicationComponent;
+  }
 }

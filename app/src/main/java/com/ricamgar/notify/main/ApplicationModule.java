@@ -3,64 +3,62 @@ package com.ricamgar.notify.main;
 import android.app.Application;
 import android.content.Context;
 
-import com.ricamgar.notify.data.database.DbOpenHelper;
+import com.ricamgar.notify.data.database.AppDatabase;
 import com.ricamgar.notify.data.reminder.ReminderSqliteRepository;
-import com.ricamgar.notify.data.reminder.mapper.CursorToReminder;
-import com.ricamgar.notify.data.reminder.mapper.ReminderToValues;
 import com.ricamgar.notify.domain.reminder.repository.RemindersRepository;
-import com.squareup.sqlbrite.BriteDatabase;
-import com.squareup.sqlbrite.SqlBrite;
-
+import dagger.Module;
+import dagger.Provides;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import dagger.Module;
-import dagger.Provides;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 @Module
 public class ApplicationModule {
-    private final Application application;
-    private final RemindersRepository remindersRepository;
+  private final Application application;
+  private final RemindersRepository remindersRepository;
 
-    ApplicationModule(Application application) {
-        this.application = application;
-        remindersRepository = createRemindersRepository();
-        new NotificationsController(application, remindersRepository);
-    }
+  ApplicationModule(Application application) {
+    this.application = application;
+    remindersRepository = createRemindersRepository();
+  }
 
-    private RemindersRepository createRemindersRepository() {
-        SqlBrite sqlBrite = SqlBrite.create();
-        DbOpenHelper dbOpenHelper = new DbOpenHelper(application);
-        BriteDatabase briteDatabase = sqlBrite.wrapDatabaseHelper(dbOpenHelper, AndroidSchedulers.mainThread());
-        return new ReminderSqliteRepository(briteDatabase, new CursorToReminder(), new ReminderToValues());
-    }
+  private RemindersRepository createRemindersRepository() {
+    AppDatabase briteDatabase = AppDatabase.Companion.createPersistentDatabase(application);
+    return new ReminderSqliteRepository(briteDatabase.reminderModel());
+  }
 
-    @Singleton
-    @Provides
-    Context provideApplication() {
-        return application.getApplicationContext();
-    }
+  @Singleton
+  @Provides
+  NotificationsController provideNotificationsController(Context context, RemindersRepository remindersRepository,
+      @Named("io")Scheduler ioThread) {
+    return new NotificationsController(context, remindersRepository, ioThread);
+  }
 
-    @Singleton
-    @Provides
-    RemindersRepository provideRemindersRepository() {
-        return remindersRepository;
-    }
+  @Singleton
+  @Provides
+  Context provideApplication() {
+    return application.getApplicationContext();
+  }
 
-    @Singleton
-    @Provides
-    @Named(value = "mainThread")
-    Scheduler provideMainScheduler() {
-        return AndroidSchedulers.mainThread();
-    }
+  @Singleton
+  @Provides
+  RemindersRepository provideRemindersRepository() {
+    return remindersRepository;
+  }
 
-    @Singleton
-    @Provides
-    @Named(value = "ioThread")
-    Scheduler provideIOScheduler() {
-        return Schedulers.io();
-    }
+  @Singleton
+  @Provides
+  @Named(value = "main")
+  Scheduler provideMainScheduler() {
+    return AndroidSchedulers.mainThread();
+  }
+
+  @Singleton
+  @Provides
+  @Named(value = "io")
+  Scheduler provideIOScheduler() {
+    return Schedulers.io();
+  }
 }
