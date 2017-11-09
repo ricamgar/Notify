@@ -16,11 +16,6 @@ android {
     manifestPlaceholders = [HOCKEYAPP_APP_ID: "4e130fec617042c7b00fe7fdae4e7025"]
   }
 
-//  compileOptions {
-//    sourceCompatibility JavaVersion.VERSION_1_8
-//    targetCompatibility JavaVersion.VERSION_1_8
-//  }
-
   buildTypes {
     release {
       minifyEnabled false

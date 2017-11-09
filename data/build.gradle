@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
@@ -28,9 +27,9 @@ dependencies {
 
   compile rootProject.ext.dependencies.kotlin
 
-  compile "android.arch.persistence.room:runtime:1.0.0-beta1"
-  compile "android.arch.persistence.room:rxjava2:1.0.0-beta1"
-  kapt "android.arch.persistence.room:compiler:1.0.0-beta1"
+  compile "android.arch.persistence.room:runtime:1.0.0-rc1"
+  compile "android.arch.persistence.room:rxjava2:1.0.0-rc1"
+  kapt "android.arch.persistence.room:compiler:1.0.0-rc1"
 
   testCompile project(':domain')
   testCompile rootProject.ext.testDependencies.junit
