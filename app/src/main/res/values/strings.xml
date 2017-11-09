@@ -5,4 +5,6 @@
   <string name="tab_history">HISTORY</string>
   <string name="add_reminder">Add Reminder</string>
   <string name="save">Save</string>
+  <string name="description">Description</string>
+  <string name="add_to_group">Add to group</string>
 </resources>

@@ -15,18 +15,18 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Module
-public class ApplicationModule {
+class ApplicationModule {
+
   private final Application application;
-  private final RemindersRepository remindersRepository;
 
   ApplicationModule(Application application) {
     this.application = application;
-    remindersRepository = createRemindersRepository();
   }
 
-  private RemindersRepository createRemindersRepository() {
-    AppDatabase briteDatabase = AppDatabase.Companion.createPersistentDatabase(application);
-    return new ReminderSqliteRepository(briteDatabase.reminderModel());
+  @Singleton
+  @Provides
+  AppDatabase provideAppDatabase() {
+    return AppDatabase.Companion.createPersistentDatabase(application);
   }
 
   @Singleton
@@ -40,12 +40,6 @@ public class ApplicationModule {
   @Provides
   Context provideApplication() {
     return application.getApplicationContext();
-  }
-
-  @Singleton
-  @Provides
-  RemindersRepository provideRemindersRepository() {
-    return remindersRepository;
   }
 
   @Singleton

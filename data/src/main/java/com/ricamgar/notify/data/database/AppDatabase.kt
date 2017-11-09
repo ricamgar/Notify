@@ -4,16 +4,19 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import com.ricamgar.notify.data.group.GroupDao
+import com.ricamgar.notify.data.group.GroupEntity
 import com.ricamgar.notify.data.reminder.ReminderDao
 import com.ricamgar.notify.data.reminder.ReminderEntity
 
 @Database(
-  entities = arrayOf(ReminderEntity::class),
+  entities = arrayOf(ReminderEntity::class, GroupEntity::class),
   version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
 
-  abstract fun reminderModel(): ReminderDao
+  internal abstract fun reminderModel(): ReminderDao
+  internal abstract fun groupModel(): GroupDao
 
   companion object {
     private const val DB_NAME = "notify.db"

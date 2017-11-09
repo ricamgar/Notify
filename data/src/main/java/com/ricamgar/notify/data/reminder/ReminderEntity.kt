@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "reminders")
-data class ReminderEntity(
+internal data class ReminderEntity(
   @PrimaryKey(autoGenerate = true)
   val id: Long,
   val description: String,

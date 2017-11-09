@@ -8,7 +8,7 @@ import com.ricamgar.notify.domain.reminder.model.Reminder
 import io.reactivex.Flowable
 
 @Dao
-abstract class ReminderDao {
+internal abstract class ReminderDao {
 
   @Query("SELECT id, description, done, groupId FROM reminders WHERE id = :id")
   abstract fun reminder(id: Long): Reminder

@@ -31,6 +31,9 @@ dependencies {
   compile "android.arch.persistence.room:rxjava2:1.0.0-rc1"
   kapt "android.arch.persistence.room:compiler:1.0.0-rc1"
 
+  compile rootProject.ext.dependencies.dagger2
+  kapt rootProject.ext.dependencies.dagger2Compiler
+
   testCompile project(':domain')
   testCompile rootProject.ext.testDependencies.junit
 }
