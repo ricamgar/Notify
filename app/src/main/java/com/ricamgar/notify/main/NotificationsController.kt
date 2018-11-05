@@ -1,9 +1,12 @@
 package com.ricamgar.notify.main
 
 import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
@@ -17,12 +20,29 @@ internal class NotificationsController(
   remindersRepository: RemindersRepository,
   ioThread: Scheduler) {
 
+  private val CHANNEL_ID = "Notify"
   private val notificationManager: NotificationManagerCompat = NotificationManagerCompat.from(context)
 
   init {
-    remindersRepository.todoReminders
+    createNotificationChannel()
+    val subscribe = remindersRepository.todoReminders
       .subscribeOn(ioThread)
       .subscribe { this.showNotification(it) }
+  }
+
+  private fun createNotificationChannel() {
+    // Create the NotificationChannel, but only on API 26+ because
+    // the NotificationChannel class is new and not in the support library
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      val importance = NotificationManager.IMPORTANCE_DEFAULT
+      val channel = NotificationChannel(CHANNEL_ID, "Notify", importance).apply {
+        description = "Notify notifications"
+      }
+      // Register the channel with the system
+      val notificationManager: NotificationManager =
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+      notificationManager.createNotificationChannel(channel)
+    }
   }
 
   private fun showNotification(reminders: List<Reminder>) {
@@ -32,7 +52,7 @@ internal class NotificationsController(
       return
     }
 
-    val builder = NotificationCompat.Builder(context)
+    val builder = NotificationCompat.Builder(context, CHANNEL_ID)
       .setTicker("Notify")
       .setContentTitle("Notify")
       .setContentText(reminders[0].description)
