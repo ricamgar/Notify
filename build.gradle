@@ -24,8 +24,8 @@ allprojects {
     androidTargetSdkVersion = 28
     androidCompileSdkVersion = 28
     androidApplicationId = 'com.ricamgar.notify'
-    androidVersionCode = 2
-    androidVersionName = '1.0'
+    androidVersionCode = 3
+    androidVersionName = '1.1.0'
   }
 
   repositories {
