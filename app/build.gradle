@@ -31,22 +31,22 @@ android {
 }
 
 dependencies {
-  compile project(":domain")
-  compile project(':data')
+  implementation project(":domain")
+  implementation project(':data')
 
-  compile rootProject.ext.dependencies.kotlin
-  compile rootProject.ext.dependencies.androidSupportv7
-  compile rootProject.ext.dependencies.androidSupportDesign
-  compile rootProject.ext.dependencies.cardView
+  implementation rootProject.ext.dependencies.kotlin
+  implementation rootProject.ext.dependencies.androidSupportv7
+  implementation rootProject.ext.dependencies.androidSupportDesign
+  implementation rootProject.ext.dependencies.cardView
 
-  compile rootProject.ext.dependencies.rxJava
-  compile rootProject.ext.dependencies.rxAndroid
-  compile rootProject.ext.dependencies.rxBindings
+  implementation rootProject.ext.dependencies.rxJava
+  implementation rootProject.ext.dependencies.rxAndroid
+  implementation rootProject.ext.dependencies.rxBindings
 
-  compile rootProject.ext.dependencies.dagger2
+  implementation rootProject.ext.dependencies.dagger2
   kapt rootProject.ext.dependencies.dagger2Compiler
 
-  compile rootProject.ext.dependencies.hockeyApp
+  implementation rootProject.ext.dependencies.hockeyApp
 
-  testCompile rootProject.ext.testDependencies.junit
+  testImplementation rootProject.ext.testDependencies.junit
 }
