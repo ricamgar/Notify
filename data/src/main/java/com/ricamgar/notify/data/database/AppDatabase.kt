@@ -10,8 +10,8 @@ import com.ricamgar.notify.data.reminder.ReminderDao
 import com.ricamgar.notify.data.reminder.ReminderEntity
 
 @Database(
-  entities = arrayOf(ReminderEntity::class, GroupEntity::class),
-  version = 2
+  entities = [ReminderEntity::class, GroupEntity::class],
+  version = 3
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -21,12 +21,13 @@ abstract class AppDatabase : RoomDatabase() {
   companion object {
     private const val DB_NAME = "notify.db"
 
-    fun createInMemoryDatabase(context: Context): AppDatabase
-      = Room.inMemoryDatabaseBuilder(context.applicationContext, AppDatabase::class.java).build()
+    fun createInMemoryDatabase(context: Context): AppDatabase =
+      Room.inMemoryDatabaseBuilder(context.applicationContext, AppDatabase::class.java).build()
 
-    fun createPersistentDatabase(context: Context): AppDatabase
-      = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DB_NAME)
-      .build()
+    fun createPersistentDatabase(context: Context): AppDatabase =
+      Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DB_NAME)
+        .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+        .build()
   }
 
 }
