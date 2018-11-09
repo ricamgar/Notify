@@ -14,7 +14,7 @@ allprojects {
                 javaxAnnotations    : "javax.inject:javax.inject:1",
                 sqlbrite            : "com.squareup.sqlbrite:sqlbrite:0.6.3",
                 hockeyApp           : "net.hockeyapp.android:HockeySDK:4.0.0",
-                kotlin              : "org.jetbrains.kotlin:kotlin-stdlib:1.1.51"
+                kotlin              : "org.jetbrains.kotlin:kotlin-stdlib:1.3.0"
         ]
 
         testDependencies = [
