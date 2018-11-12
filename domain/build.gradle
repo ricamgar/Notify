@@ -22,5 +22,6 @@ dependencies {
   implementation rootProject.ext.dependencies.javaxAnnotations
 
   testImplementation 'junit:junit:4.12'
-  testImplementation 'org.mockito:mockito-all:1.9.5'
+  testImplementation 'org.mockito:mockito-all:1.10.19'
+  testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
 }

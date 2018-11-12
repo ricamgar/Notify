@@ -1,42 +1,23 @@
 package com.ricamgar.notify.domain.reminder.usecase
 
-import com.ricamgar.notify.domain.base.usecase.UseCaseTest
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import com.ricamgar.notify.domain.reminder.RemindersDoubles
-import com.ricamgar.notify.domain.reminder.model.Reminder
 import com.ricamgar.notify.domain.reminder.repository.RemindersRepository
-import org.junit.Before
+import io.reactivex.Single
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import rx.Observable
-import rx.observers.TestSubscriber
 
-class AddOrUpdateReminderTest : UseCaseTest() {
+class AddOrUpdateReminderTest {
 
-    @Mock lateinit var remindersRepository: RemindersRepository
+  private val remindersRepository: RemindersRepository = mock {
+    on { addOrUpdate(RemindersDoubles.REMINDER) } doReturn Single.just(RemindersDoubles.REMINDER)
+  }
+  private val addOrUpdateReminderUseCase = AddOrUpdateReminder(remindersRepository)
 
-    lateinit var addOrUpdateReminderUseCase: AddOrUpdateReminder
-
-    @Before override fun setUp() {
-        super.setUp()
-        addOrUpdateReminderUseCase = AddOrUpdateReminder(remindersRepository, executionThread, postExecutionThread)
-
-        `when`(remindersRepository.addOrUpdate(RemindersDoubles.REMINDER)).thenReturn(Observable.just(RemindersDoubles.REMINDER))
-    }
-
-    @Test fun testAddReminderSuccess() {
-        val testSubscriber = TestSubscriber<Reminder>()
-        addOrUpdateReminderUseCase.setReminder(RemindersDoubles.REMINDER)
-        addOrUpdateReminderUseCase.execute().subscribe(testSubscriber)
-
-        testSubscriber.assertNoErrors()
-        testSubscriber.assertValue(RemindersDoubles.REMINDER)
-    }
-
-    @Test fun testAddReminderErrorReminderNotSet() {
-        val testSubscriber = TestSubscriber<Reminder>()
-        addOrUpdateReminderUseCase.execute().subscribe(testSubscriber)
-
-        testSubscriber.assertError(IllegalArgumentException::class.java)
-    }
+  @Test fun `should forward call to repository`() {
+    addOrUpdateReminderUseCase.execute(RemindersDoubles.REMINDER)
+      .test()
+      .assertNoErrors()
+      .assertValue(RemindersDoubles.REMINDER)
+  }
 }

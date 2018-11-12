@@ -1,53 +1,23 @@
 package com.ricamgar.notify.domain.reminder.usecase
 
-import com.ricamgar.notify.domain.base.usecase.UseCaseTest
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import com.ricamgar.notify.domain.reminder.RemindersDoubles
-import com.ricamgar.notify.domain.reminder.model.Reminder
 import com.ricamgar.notify.domain.reminder.repository.RemindersRepository
-import org.junit.Before
+import io.reactivex.Single
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import rx.Observable
-import rx.observers.TestSubscriber
-import java.util.*
 
-class GetReminderTest : UseCaseTest() {
+class GetReminderTest {
 
-    @Mock lateinit var remindersRepository: RemindersRepository
+  private val remindersRepository: RemindersRepository = mock {
+    on { getById(0) } doReturn Single.just(RemindersDoubles.REMINDER)
+  }
+  private val getReminderUseCase = GetReminder(remindersRepository)
 
-    lateinit var getReminderUseCase: GetReminder
-
-    @Before override fun setUp() {
-        super.setUp()
-        getReminderUseCase = GetReminder(remindersRepository, executionThread, postExecutionThread)
-
-        `when`(remindersRepository.getById(0)).thenReturn(Observable.just(RemindersDoubles.REMINDER))
-        `when`(remindersRepository.getById(1)).thenReturn(Observable.empty<Reminder>())
-    }
-
-    @Test fun testGetReminderByIdSuccess() {
-        val testSubscriber = TestSubscriber<Reminder>()
-        getReminderUseCase.setId(0)
-        getReminderUseCase.execute().subscribe(testSubscriber)
-
-        testSubscriber.assertNoErrors()
-        testSubscriber.assertValue(RemindersDoubles.REMINDER)
-    }
-
-    @Test fun testGetReminderByIdNotFound() {
-        val testSubscriber = TestSubscriber<Reminder>()
-        getReminderUseCase.setId(1)
-        getReminderUseCase.execute().subscribe(testSubscriber)
-
-        testSubscriber.assertNoErrors()
-        testSubscriber.assertNoValues()
-    }
-
-    @Test fun testGetReminderByIdErrorIdNotSet() {
-        val testSubscriber = TestSubscriber<Reminder>()
-        getReminderUseCase.execute().subscribe(testSubscriber)
-
-        testSubscriber.assertError(NoSuchElementException::class.java)
-    }
+  @Test fun `should forward call to repository`() {
+    getReminderUseCase.execute(0)
+      .test()
+      .assertNoErrors()
+      .assertValue(RemindersDoubles.REMINDER)
+  }
 }
