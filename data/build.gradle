@@ -10,6 +10,16 @@ android {
     minSdkVersion parent.ext.androidMinSdkVersion
     targetSdkVersion parent.ext.androidTargetSdkVersion
     publishNonDefault true
+    //Room schema location for testing
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+      }
+    }
+  }
+
+  sourceSets {
+    androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
   }
 
   compileOptions {
@@ -36,4 +46,6 @@ dependencies {
 
   testImplementation project(':domain')
   testImplementation rootProject.ext.testDependencies.junit
+
+  androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
 }
