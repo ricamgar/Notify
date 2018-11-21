@@ -1,6 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'jacoco-android'
+
+jacoco {
+  toolVersion = "0.7.9"
+  reportsDir = file("$buildDir/reports")
+}
+
 
 android {
   compileSdkVersion parent.ext.androidCompileSdkVersion
