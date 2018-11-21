@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
@@ -28,7 +27,7 @@ class AddReminderActivity : BaseActivity<Reminder, AddReminderPresenter>(), AddR
     setContentView(R.layout.activity_add_reminder)
 
     val descriptionEt = findViewById<EditText>(R.id.add_description)
-    descriptionEt.setOnEditorActionListener { v, actionId, event ->
+    descriptionEt.setOnEditorActionListener { _, actionId, _ ->
       if (actionId == EditorInfo.IME_ACTION_DONE) {
         presenter.insertReminder()
       }

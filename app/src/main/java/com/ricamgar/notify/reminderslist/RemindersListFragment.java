@@ -57,8 +57,8 @@ public class RemindersListFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new RemindersListAdapter(this, position);
-        remindersList = (RecyclerView) view.findViewById(R.id.remindersList);
-        remindersList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        remindersList = view.findViewById(R.id.remindersList);
+        remindersList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         remindersList.setAdapter(adapter);
     }
 

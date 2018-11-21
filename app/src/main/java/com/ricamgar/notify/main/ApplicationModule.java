@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.ricamgar.notify.data.database.AppDatabase;
-import com.ricamgar.notify.data.reminder.ReminderSqliteRepository;
 import com.ricamgar.notify.domain.reminder.repository.RemindersRepository;
 import dagger.Module;
 import dagger.Provides;
