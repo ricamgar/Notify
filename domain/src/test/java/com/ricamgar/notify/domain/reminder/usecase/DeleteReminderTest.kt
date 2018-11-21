@@ -18,6 +18,6 @@ class DeleteReminderTest {
     deleteReminderUseCase.execute(RemindersDoubles.REMINDER.id)
       .test()
       .assertNoErrors()
-      .assertComplete()
+      .assertNotComplete()
   }
 }
