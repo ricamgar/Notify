@@ -9,5 +9,6 @@
 */.idea
 .idea/*
 *.apk
+*.aab
 **/build
 sign/*

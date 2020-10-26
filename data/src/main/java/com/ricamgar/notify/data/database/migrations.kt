@@ -1,7 +1,7 @@
 package com.ricamgar.notify.data.database
 
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.migration.Migration
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 
 val MIGRATION_1_2: Migration = object : Migration(1, 2) {

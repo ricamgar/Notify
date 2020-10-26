@@ -1,13 +1,17 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'jacoco-android'
+//apply plugin: 'jacoco-android'
 
-jacoco {
-  toolVersion = "0.7.9"
-  reportsDir = file("$buildDir/reports")
-}
+//jacoco {
+//  toolVersion = "0.8.4"
+//  reportsDir = file("$buildDir/reports")
+//}
 
+
+//tasks.withType(Test) {
+//  jacoco.includeNoLocationClasses = true
+//}
 
 android {
   compileSdkVersion parent.ext.androidCompileSdkVersion
@@ -34,9 +38,9 @@ dependencies {
 
   implementation rootProject.ext.dependencies.kotlin
 
-  api "android.arch.persistence.room:runtime:1.1.1"
-  api "android.arch.persistence.room:rxjava2:1.1.1"
-  kapt "android.arch.persistence.room:compiler:1.1.1"
+  api 'androidx.room:room-runtime:2.2.5'
+  api 'androidx.room:room-rxjava2:2.2.5'
+  kapt 'androidx.room:room-compiler:2.2.5'
 
   implementation rootProject.ext.dependencies.dagger2
   kapt rootProject.ext.dependencies.dagger2Compiler

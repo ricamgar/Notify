@@ -9,9 +9,9 @@ buildscript {
     }
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.2.1'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.0"
-    classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
+    classpath 'com.android.tools.build:gradle:4.1.0'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
+//    classpath 'com.dicedmelon.gradle:jacoco-android:0.1.4'
   }
 }
 
@@ -20,12 +20,12 @@ allprojects {
   ext {
     // Android config
     androidBuildToolsVersion = '28.0.3'
-    androidMinSdkVersion = 21
-    androidTargetSdkVersion = 28
-    androidCompileSdkVersion = 28
+    androidMinSdkVersion = 26
+    androidTargetSdkVersion = 29
+    androidCompileSdkVersion = 29
     androidApplicationId = 'com.ricamgar.notify'
-    androidVersionCode = 4
-    androidVersionName = '1.1.1'
+    androidVersionCode = 5
+    androidVersionName = '1.2.0'
   }
 
   repositories {

@@ -1,7 +1,7 @@
 package com.ricamgar.notify.base.mvp;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class BaseActivity<ViewModel, Presenter extends AbstractBasePresenter<ViewModel>>
         extends AppCompatActivity implements AbstractBasePresenter.BaseView {
